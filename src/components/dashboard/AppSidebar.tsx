@@ -16,7 +16,7 @@ import {
   Settings, 
   LogOut, 
   PlusCircle, 
-  BrainCircuit,
+  Lightbulb,
   User
 } from 'lucide-react';
 import Link from 'next/link';
@@ -24,9 +24,9 @@ import Link from 'next/link';
 export function AppSidebar() {
   const navItems = [
     { icon: <LayoutDashboard />, label: 'Overview', href: '/dashboard' },
-    { icon: <PlusCircle />, label: 'Tracker', href: '/tracker' },
-    { icon: <BarChart2 />, label: 'Detailed Impact', href: '/dashboard' },
-    { icon: <BrainCircuit />, label: 'AI Suggestions', href: '/recommendations' },
+    { icon: <PlusCircle />, label: 'Journal', href: '/tracker' },
+    { icon: <BarChart2 />, label: 'Deep Dive', href: '/dashboard' },
+    { icon: <Lightbulb />, label: 'Action Plan', href: '/recommendations' },
     { icon: <Award />, label: 'Achievements', href: '#' },
   ];
 

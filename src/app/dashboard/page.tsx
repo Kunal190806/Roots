@@ -12,7 +12,8 @@ import {
   Trophy, 
   ArrowUpRight,
   PlusCircle,
-  Brain
+  Sparkles,
+  Globe
 } from 'lucide-react';
 import { CarbonChart } from '@/components/dashboard/CarbonChart';
 import { ActivityList } from '@/components/dashboard/ActivityList';
@@ -25,7 +26,7 @@ export default function Dashboard() {
       <AppSidebar />
       <SidebarInset className="bg-background">
         <header className="flex h-16 shrink-0 items-center gap-2 px-6 border-b border-border/50 sticky top-0 z-40 bg-background/80 backdrop-blur-md">
-          <h1 className="font-headline text-xl font-bold tracking-tight">Overview</h1>
+          <h1 className="font-headline text-xl font-bold tracking-tight">Impact Overview</h1>
           <div className="ml-auto flex items-center gap-3">
             <Link href="/tracker">
               <Button className="bg-primary text-background font-semibold rounded-full px-4 h-9">
@@ -48,7 +49,7 @@ export default function Dashboard() {
                 </Badge>
               </div>
               <div className="space-y-1">
-                <p className="text-muted-foreground text-sm font-medium">Total Carbon</p>
+                <p className="text-muted-foreground text-sm font-medium">Monthly Footprint</p>
                 <div className="flex items-baseline gap-1">
                   <h3 className="text-3xl font-headline font-bold">142.5</h3>
                   <span className="text-muted-foreground text-sm">kg CO2e</span>
@@ -93,10 +94,10 @@ export default function Dashboard() {
                 </div>
               </div>
               <div className="space-y-1">
-                <p className="text-muted-foreground text-sm font-medium">Tree Equivalent</p>
+                <p className="text-muted-foreground text-sm font-medium">Tree Offset</p>
                 <div className="flex items-baseline gap-1">
                   <h3 className="text-3xl font-headline font-bold">6.2</h3>
-                  <span className="text-muted-foreground text-sm">trees saved</span>
+                  <span className="text-muted-foreground text-sm">trees equivalent</span>
                 </div>
               </div>
             </div>
@@ -107,8 +108,8 @@ export default function Dashboard() {
             <div className="lg:col-span-2 bento-card flex flex-col min-h-[400px]">
               <div className="flex justify-between items-center mb-6">
                 <div>
-                  <h2 className="font-headline text-xl font-bold">Impact Trends</h2>
-                  <p className="text-muted-foreground text-sm">Your weekly carbon footprint distribution</p>
+                  <h2 className="font-headline text-xl font-bold">Progress Trends</h2>
+                  <p className="text-muted-foreground text-sm">Your weekly carbon distribution</p>
                 </div>
                 <select className="bg-secondary/50 border-none rounded-md px-3 py-1.5 text-xs font-medium focus:ring-1 ring-primary">
                   <option>Last 7 Days</option>
@@ -121,19 +122,19 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* AI Insights Bento */}
+            {/* Smart Insights Bento */}
             <div className="space-y-6">
               <Card className="border-primary/20 bg-primary/5 shadow-none overflow-hidden group">
                 <CardHeader className="pb-2">
                   <div className="flex items-center gap-2 mb-2">
-                    <Brain className="w-4 h-4 text-primary" />
-                    <span className="text-[10px] font-bold tracking-widest text-primary uppercase">Trace Intelligence</span>
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    <span className="text-[10px] font-bold tracking-widest text-primary uppercase">Trace Smart Insights</span>
                   </div>
-                  <CardTitle className="text-lg font-headline">Personalized Swap</CardTitle>
+                  <CardTitle className="text-lg font-headline">Impactful Swap</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-sm text-muted-foreground">
-                    Based on your high transportation footprint this week, we suggest switching your 5-mile commute to an E-bike twice a week.
+                    Based on your travel patterns this week, we suggest switching your 5-mile commute to an E-bike twice a week.
                   </p>
                   <div className="flex items-center justify-between p-3 bg-background/50 rounded-xl border border-primary/10">
                     <div className="flex items-center gap-3">
@@ -147,7 +148,7 @@ export default function Dashboard() {
                     </Badge>
                   </div>
                   <Button variant="outline" className="w-full rounded-full text-xs font-bold border-primary/30 hover:bg-primary/10">
-                    Try this habit
+                    Adopt this habit
                   </Button>
                 </CardContent>
               </Card>
@@ -179,21 +180,21 @@ export default function Dashboard() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bento-card">
-              <h3 className="font-headline text-lg font-bold mb-6">Recent Activity Logs</h3>
+              <h3 className="font-headline text-lg font-bold mb-6">Recent Activity</h3>
               <ActivityList />
               <Button variant="ghost" className="w-full mt-4 text-primary hover:text-primary hover:bg-primary/10">
-                View All Logs <ArrowUpRight className="ml-2 w-4 h-4" />
+                View All Records <ArrowUpRight className="ml-2 w-4 h-4" />
               </Button>
             </div>
 
             <div className="bento-card flex flex-col">
-              <h3 className="font-headline text-lg font-bold mb-6">Upcoming Achievements</h3>
+              <h3 className="font-headline text-lg font-bold mb-6">Personal Goals</h3>
               <div className="grid grid-cols-2 gap-4 flex-1">
                 <div className="p-4 rounded-xl bg-secondary/30 flex flex-col items-center text-center justify-center border border-border/50">
                   <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-3">
                     <Leaf className="w-6 h-6 text-accent" />
                   </div>
-                  <p className="text-xs font-bold uppercase tracking-wider mb-1">Carbon King</p>
+                  <p className="text-xs font-bold uppercase tracking-wider mb-1">Consistency</p>
                   <p className="text-[10px] text-muted-foreground">Log 14 days in a row</p>
                   <Progress value={80} className="h-1 mt-4 w-full" />
                 </div>
@@ -201,7 +202,7 @@ export default function Dashboard() {
                   <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-3">
                     <Globe className="w-6 h-6 text-primary" />
                   </div>
-                  <p className="text-xs font-bold uppercase tracking-wider mb-1">Green Chef</p>
+                  <p className="text-xs font-bold uppercase tracking-wider mb-1">Impact Chef</p>
                   <p className="text-[10px] text-muted-foreground">Log 10 plant-based meals</p>
                   <Progress value={40} className="h-1 mt-4 w-full" />
                 </div>

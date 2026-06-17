@@ -15,8 +15,8 @@ export default function Home() {
         </Link>
         <nav className="ml-auto hidden md:flex items-center gap-8 text-sm font-medium">
           <Link href="#features" className="hover:text-primary transition-colors">Features</Link>
-          <Link href="#how-it-works" className="hover:text-primary transition-colors">How it works</Link>
-          <Link href="/dashboard" className="hover:text-primary transition-colors">Impact</Link>
+          <Link href="#how-it-works" className="hover:text-primary transition-colors">Methodology</Link>
+          <Link href="/dashboard" className="hover:text-primary transition-colors">Your Impact</Link>
         </nav>
         <div className="ml-auto md:ml-8 flex items-center gap-4">
           <Link href="/onboarding">
@@ -34,7 +34,7 @@ export default function Home() {
           
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-8">
             <Zap className="w-3 h-3" />
-            AI-POWERED SUSTAINABILITY
+            PERSONALIZED SUSTAINABILITY
           </div>
           
           <h1 className="font-headline text-5xl md:text-7xl font-bold mb-6 max-w-4xl leading-[1.1]">
@@ -42,7 +42,7 @@ export default function Home() {
           </h1>
           
           <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-10 leading-relaxed">
-            Trace uses generative AI to analyze your daily habits and provide a personalized roadmap to a carbon-neutral lifestyle. Measure, track, and reduce your footprint today.
+            Trace analyzes your daily habits to provide a tailored roadmap to a carbon-neutral lifestyle. Measure your footprint and grow your impact today.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
@@ -64,7 +64,7 @@ export default function Home() {
               src="https://picsum.photos/seed/trace-dashboard/1024/576" 
               alt="Trace Dashboard Preview" 
               className="w-full h-full object-cover opacity-80"
-              data-ai-hint="dashboard design"
+              data-ai-hint="clean dashboard"
             />
           </div>
         </section>
@@ -73,9 +73,9 @@ export default function Home() {
         <section id="features" className="px-6 py-24 bg-secondary/20">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="font-headline text-4xl font-bold mb-4">Powerful Insight, Personal Care</h2>
+              <h2 className="font-headline text-4xl font-bold mb-4">Sophisticated Insights, Personal Care</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-                We combine technical precision with behavioral science to make sustainable living accessible for everyone.
+                We combine environmental science with behavioral psychology to make sustainable living accessible for everyone.
               </p>
             </div>
             
@@ -83,18 +83,18 @@ export default function Home() {
               {[
                 {
                   icon: <Zap className="w-6 h-6 text-primary" />,
-                  title: "AI Impact Analyzer",
-                  description: "Real-time carbon prediction from your meal descriptions, commutes, and energy usage logs."
+                  title: "Impact Analyzer",
+                  description: "Real-time carbon estimation based on your meals, commutes, and daily lifestyle logs."
                 },
                 {
                   icon: <BarChart3 className="w-6 h-6 text-primary" />,
                   title: "Visual Data Stories",
-                  description: "Understand your impact through elegant, interactive visualizations that show your progress over time."
+                  description: "Understand your footprint through elegant, interactive visualizations that show your progress over time."
                 },
                 {
                   icon: <ShieldCheck className="w-6 h-6 text-primary" />,
                   title: "Adaptive Goal Setting",
-                  description: "Dynamic targets that adjust based on your performance and preferences for sustained change."
+                  description: "Dynamic targets that adjust based on your habits and preferences for sustained change."
                 }
               ].map((feature, i) => (
                 <div key={i} className="bento-card group">

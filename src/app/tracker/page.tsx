@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect } from 'react';
@@ -7,7 +6,7 @@ import { AppSidebar } from '@/components/dashboard/AppSidebar';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Brain, Sparkles, Loader2, Utensils, Car, Zap, Leaf, AlertCircle } from 'lucide-react';
+import { Sparkles, Loader2, Utensils, Car, Zap, Leaf, AlertCircle, BookOpen } from 'lucide-react';
 import { predictCarbonFootprint } from '@/ai/flows/carbon-footprint-prediction';
 import type { CarbonFootprintPredictionOutput } from '@/ai/flows/carbon-footprint-prediction';
 import { useToast } from '@/hooks/use-toast';
@@ -25,8 +24,6 @@ export default function TrackerPage() {
   const auth = useAuth();
   const user = auth?.currentUser;
 
-  // For prototype simplicity, we use a fixed ID if not logged in, 
-  // but in a real app, usage limits require Auth.
   const userId = user?.uid || 'anonymous_guest';
 
   useEffect(() => {
@@ -46,7 +43,7 @@ export default function TrackerPage() {
         toast({
           variant: "destructive",
           title: "Daily Limit Reached",
-          description: "You have used your 5 AI requests for today. Please come back tomorrow!",
+          description: "You've shared 5 records today. Please come back tomorrow to keep tracking!",
         });
         setIsAnalyzing(false);
         return;
@@ -55,7 +52,6 @@ export default function TrackerPage() {
       const output = await predictCarbonFootprint({ dailyActivitiesDescription: log });
       setResult(output);
       
-      // Increment usage after successful AI call
       await incrementUsage(db, userId);
       setUsageRemaining(remaining - 1);
 
@@ -63,7 +59,7 @@ export default function TrackerPage() {
       toast({
         variant: "destructive",
         title: "Analysis Failed",
-        description: "There was an error predicting your footprint. Please try again.",
+        description: "We couldn't process your record. Please try again.",
       });
     } finally {
       setIsAnalyzing(false);
@@ -75,16 +71,16 @@ export default function TrackerPage() {
       <AppSidebar />
       <SidebarInset className="bg-background">
         <header className="flex h-16 shrink-0 items-center gap-2 px-6 border-b border-border/50 sticky top-0 z-40 bg-background/80 backdrop-blur-md">
-          <h1 className="font-headline text-xl font-bold tracking-tight">AI Impact Analyzer</h1>
+          <h1 className="font-headline text-xl font-bold tracking-tight">Impact Journal</h1>
         </header>
 
         <main className="p-6 max-w-4xl mx-auto w-full space-y-8">
           {usageRemaining !== null && usageRemaining <= 0 && (
             <Alert variant="destructive" className="bg-destructive/10 border-destructive/20 text-destructive">
               <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Usage Limit Reached</AlertTitle>
+              <AlertTitle>Daily Limit Reached</AlertTitle>
               <AlertDescription>
-                You've reached your daily limit of AI-powered analyses. Your counter will reset tomorrow.
+                You've reached your journal entries for today. Your counter will reset tomorrow.
               </AlertDescription>
             </Alert>
           )}
@@ -93,18 +89,18 @@ export default function TrackerPage() {
             <div className="flex items-center justify-between gap-3 mb-2">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-primary/20 rounded-lg">
-                  <Brain className="w-5 h-5 text-primary" />
+                  <BookOpen className="w-5 h-5 text-primary" />
                 </div>
                 <h2 className="font-headline text-2xl font-bold">What did you do today?</h2>
               </div>
               {usageRemaining !== null && (
                 <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest bg-secondary/50 px-3 py-1 rounded-full">
-                  {usageRemaining} requests left today
+                  {usageRemaining} entries left
                 </span>
               )}
             </div>
             <p className="text-muted-foreground">
-              Describe your meals, transportation, and home energy usage. Trace's AI will calculate the carbon equivalent.
+              Describe your meals, transport, and energy use. We'll translate your day into environmental impact.
             </p>
             
             <div className="relative group">
@@ -112,14 +108,14 @@ export default function TrackerPage() {
               <Card className="relative border-border/50 bg-card rounded-2xl overflow-hidden shadow-xl">
                 <CardContent className="p-0">
                   <Textarea 
-                    placeholder="Example: I had a steak for lunch, took the bus to work (8 miles), and watched Netflix for 3 hours."
+                    placeholder="Example: I had a vegetarian lunch, cycled to the store (2 miles), and kept the lights off most of the evening."
                     className="min-h-[160px] p-6 border-none focus-visible:ring-0 text-lg resize-none bg-transparent"
                     value={log}
                     onChange={(e) => setLog(e.target.value)}
                     disabled={usageRemaining !== null && usageRemaining <= 0}
                   />
                   <div className="p-4 flex justify-between items-center bg-secondary/30 border-t border-border/50">
-                    <p className="text-xs text-muted-foreground">AI estimates are based on global carbon standards.</p>
+                    <p className="text-xs text-muted-foreground">Estimates are based on standard carbon emission factors.</p>
                     <Button 
                       onClick={handleAnalyze} 
                       disabled={isAnalyzing || !log.trim() || (usageRemaining !== null && usageRemaining <= 0)}
@@ -130,7 +126,7 @@ export default function TrackerPage() {
                       ) : (
                         <Sparkles className="w-4 h-4 mr-2" />
                       )}
-                      Analyze Impact
+                      Calculate Impact
                     </Button>
                   </div>
                 </CardContent>
@@ -150,7 +146,7 @@ export default function TrackerPage() {
                 </Card>
 
                 <Card className="md:col-span-2 bento-card">
-                  <h3 className="font-headline text-lg font-bold mb-6">Impact Breakdown</h3>
+                  <h3 className="font-headline text-lg font-bold mb-6">Breakdown</h3>
                   <div className="grid grid-cols-2 gap-8">
                     <div className="flex items-center gap-4">
                       <div className="p-3 bg-secondary rounded-xl">
@@ -197,7 +193,7 @@ export default function TrackerPage() {
               <Card className="bento-card bg-secondary/20">
                 <CardHeader className="p-0 mb-4">
                   <CardTitle className="text-lg font-headline flex items-center gap-2">
-                    <Brain className="w-4 h-4 text-primary" /> Trace Insights
+                    <Sparkles className="w-4 h-4 text-primary" /> Observations
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
@@ -209,7 +205,7 @@ export default function TrackerPage() {
 
               <div className="flex justify-center gap-4">
                 <Button className="rounded-full px-8 bg-accent text-background font-bold hover:bg-accent/90">
-                  Log to History
+                  Save to History
                 </Button>
                 <Button variant="outline" className="rounded-full px-8 border-border/50 hover:bg-secondary/50" onClick={() => setResult(null)}>
                   Clear
