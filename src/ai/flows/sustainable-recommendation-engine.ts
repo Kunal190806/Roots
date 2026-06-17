@@ -14,16 +14,16 @@ const SustainableRecommendationInputSchema = z.object({
   currentActivitiesSummary: z
     .string()
     .describe(
-      'A summary of the user\'s recent activities across categories like meals, transportation, and energy usage. Example: "Yesterday I ate meat for dinner, drove 20 miles to work, and left my computer on all night."
-    '),
+      'A summary of the user\'s recent activities across categories like meals, transportation, and energy usage. Example: "Yesterday I ate meat for dinner, drove 20 miles to work, and left my computer on all night."'
+    ),
   currentCarbonFootprintKgCO2e: z
     .number()
     .describe('The user\'s estimated current monthly carbon footprint in kg CO2e.'),
   userGoals: z
     .string()
     .describe(
-      'The user\'s specific sustainability goals or preferences. Example: "I want to reduce my driving, eat less red meat, and save money on energy bills."
-    '),
+      'The user\'s specific sustainability goals or preferences. Example: "I want to reduce my driving, eat less red meat, and save money on energy bills."'
+    ),
 });
 export type SustainableRecommendationInput = z.infer<
   typeof SustainableRecommendationInputSchema
@@ -59,7 +59,7 @@ const sustainableRecommendationPrompt = ai.definePrompt({
   name: 'sustainableRecommendationPrompt',
   input: {schema: SustainableRecommendationInputSchema},
   output: {schema: SustainableRecommendationOutputSchema},
-  prompt: `You are an expert sustainability coach named Trace. Your goal is to help users reduce their personal carbon footprint by providing personalized, actionable recommendations for sustainable swaps and habit changes.
+  prompt: `You are an expert sustainability coach named Sage. Your goal is to help users reduce their personal carbon footprint by providing personalized, actionable recommendations for sustainable swaps and habit changes.
 
 Analyze the user's reported activities and carbon footprint data, considering their stated goals, to generate practical and impactful suggestions. Focus on making the recommendations easy to understand and implement, providing clear estimated carbon reduction impacts.
 

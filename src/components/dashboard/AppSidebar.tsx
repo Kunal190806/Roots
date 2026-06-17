@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/sidebar';
 import { 
   LayoutDashboard, 
-  Leaf, 
+  TreeDeciduous, 
   BarChart2, 
   Award, 
   Settings, 
@@ -33,11 +33,11 @@ export function AppSidebar() {
   return (
     <Sidebar variant="inset" className="border-r border-border/50">
       <SidebarHeader className="p-4">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="bg-primary p-1 rounded-lg">
-            <Leaf className="w-5 h-5 text-background" />
+        <Link href="/" className="flex items-center gap-1.5 group">
+          <div className="text-primary group-hover:scale-110 transition-transform duration-300">
+            <TreeDeciduous className="w-6 h-6" />
           </div>
-          <span className="font-headline text-xl font-bold tracking-tight">Trace</span>
+          <span className="font-headline text-xl font-bold tracking-tighter">Roots<span className="text-primary">.</span></span>
         </Link>
       </SidebarHeader>
       <SidebarContent className="px-2">

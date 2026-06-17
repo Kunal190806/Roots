@@ -6,7 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Card } from '@/components/ui/card';
 import { 
   Car, 
-  Leaf, 
+  TreeDeciduous, 
   Utensils, 
   Zap, 
   ShoppingBag, 
@@ -19,9 +19,9 @@ import Link from 'next/link';
 const STEPS = [
   {
     id: 'intro',
-    title: "Welcome to Trace",
+    title: "Welcome to Roots",
     description: "Let's establish your carbon baseline. It takes 2 minutes and helps us personalize your journey.",
-    icon: <Leaf className="w-12 h-12 text-primary" />
+    icon: <TreeDeciduous className="w-12 h-12 text-primary" />
   },
   {
     id: 'transport',
@@ -80,11 +80,9 @@ export default function OnboardingPage() {
       <div className="max-w-md mx-auto w-full flex-1 flex flex-col justify-center gap-8">
         <header className="space-y-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="bg-primary p-1 rounded-md">
-                <Leaf className="w-4 h-4 text-background" />
-              </div>
-              <span className="font-headline font-bold text-lg">Trace</span>
+            <Link href="/" className="flex items-center gap-1.5 group">
+              <TreeDeciduous className="w-5 h-5 text-primary" />
+              <span className="font-headline font-bold text-lg tracking-tighter">Roots.</span>
             </Link>
             <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Step {step + 1} of {STEPS.length}</span>
           </div>

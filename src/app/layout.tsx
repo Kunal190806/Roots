@@ -2,8 +2,8 @@ import type {Metadata} from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Trace | AI-Powered Carbon Footprint Tracking',
-  description: 'Measure, track, and reduce your personal carbon footprint with AI-driven insights.',
+  title: 'Roots | Sustainable Living Companion',
+  description: 'Nurture your impact and grow a sustainable future with personalized insights.',
 };
 
 export default function RootLayout({
