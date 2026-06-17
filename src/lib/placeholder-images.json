@@ -1,3 +1,22 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-nature",
+      "description": "A lush green forest landscape reflecting growth and sustainability.",
+      "imageUrl": "https://picsum.photos/seed/forest/1200/600",
+      "imageHint": "lush forest"
+    },
+    {
+      "id": "sustainable-lifestyle",
+      "description": "A collage representing sustainable choices like biking and healthy food.",
+      "imageUrl": "https://picsum.photos/seed/green/800/600",
+      "imageHint": "sustainability"
+    },
+    {
+      "id": "achievement-leaf",
+      "description": "A close up of a vibrant green leaf.",
+      "imageUrl": "https://picsum.photos/seed/leaf/400/400",
+      "imageHint": "vibrant leaf"
+    }
+  ]
 }
