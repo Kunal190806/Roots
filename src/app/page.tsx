@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { TreeDeciduous, BarChart3, Zap, Globe, ArrowRight, ShieldCheck } from 'lucide-react';
@@ -62,11 +63,13 @@ export default function Home() {
 
           <div className="mt-20 w-full max-w-5xl aspect-video rounded-2xl border border-border/50 bg-card overflow-hidden shadow-2xl relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent pointer-events-none" />
-            <img 
+            <Image 
               src="https://picsum.photos/seed/roots-dashboard/1024/576" 
               alt="Roots Dashboard Preview" 
+              width={1024}
+              height={576}
               className="w-full h-full object-cover opacity-80"
-              data-ai-hint="clean dashboard"
+              unoptimized
             />
           </div>
         </section>

@@ -80,7 +80,7 @@ export default function TrackerPage() {
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Daily Limit Reached</AlertTitle>
               <AlertDescription>
-                You've reached your journal entries for today. Your counter will reset tomorrow.
+                You&apos;ve reached your journal entries for today. Your counter will reset tomorrow.
               </AlertDescription>
             </Alert>
           )}
@@ -100,7 +100,7 @@ export default function TrackerPage() {
               )}
             </div>
             <p className="text-muted-foreground">
-              Describe your meals, transport, and energy use. We'll translate your day into environmental impact.
+              Describe your meals, transport, and energy use. We&apos;ll translate your day into environmental impact.
             </p>
             
             <div className="relative group">
@@ -198,7 +198,7 @@ export default function TrackerPage() {
                 </CardHeader>
                 <CardContent className="p-0">
                   <p className="text-muted-foreground leading-relaxed italic text-lg">
-                    "{result.explanation}"
+                    &quot;{result.explanation}&quot;
                   </p>
                 </CardContent>
               </Card>

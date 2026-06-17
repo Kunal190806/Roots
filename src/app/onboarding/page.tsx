@@ -114,7 +114,7 @@ export default function OnboardingPage() {
               ))
             ) : (
               <Button size="lg" onClick={nextStep} className="w-full h-14 rounded-full text-lg font-bold bg-primary text-background hover:bg-primary/90 mt-4">
-                Let's Go <ArrowRight className="ml-2 w-5 h-5" />
+                Let&apos;s Go <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             )}
           </div>
