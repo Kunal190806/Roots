@@ -1,29 +1,64 @@
+
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/dashboard/AppSidebar';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
-import { Brain, Sparkles, Send, Loader2, Leaf, Car, Zap, Utensils } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Brain, Sparkles, Loader2, Utensils, Car, Zap, Leaf, AlertCircle } from 'lucide-react';
 import { predictCarbonFootprint } from '@/ai/flows/carbon-footprint-prediction';
 import type { CarbonFootprintPredictionOutput } from '@/ai/flows/carbon-footprint-prediction';
 import { useToast } from '@/hooks/use-toast';
+import { useFirestore, useAuth } from '@/firebase';
+import { checkUsageLimit, incrementUsage } from '@/lib/usage-limit';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function TrackerPage() {
   const [log, setLog] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<CarbonFootprintPredictionOutput | null>(null);
+  const [usageRemaining, setUsageRemaining] = useState<number | null>(null);
   const { toast } = useToast();
+  const db = useFirestore();
+  const auth = useAuth();
+  const user = auth?.currentUser;
+
+  // For prototype simplicity, we use a fixed ID if not logged in, 
+  // but in a real app, usage limits require Auth.
+  const userId = user?.uid || 'anonymous_guest';
+
+  useEffect(() => {
+    if (db && userId) {
+      checkUsageLimit(db, userId).then(res => setUsageRemaining(res.remaining));
+    }
+  }, [db, userId]);
 
   const handleAnalyze = async () => {
-    if (!log.trim()) return;
+    if (!log.trim() || !db) return;
     
     setIsAnalyzing(true);
     try {
+      const { allowed, remaining } = await checkUsageLimit(db, userId);
+      
+      if (!allowed) {
+        toast({
+          variant: "destructive",
+          title: "Daily Limit Reached",
+          description: "You have used your 5 AI requests for today. Please come back tomorrow!",
+        });
+        setIsAnalyzing(false);
+        return;
+      }
+
       const output = await predictCarbonFootprint({ dailyActivitiesDescription: log });
       setResult(output);
+      
+      // Increment usage after successful AI call
+      await incrementUsage(db, userId);
+      setUsageRemaining(remaining - 1);
+
     } catch (error) {
       toast({
         variant: "destructive",
@@ -44,15 +79,32 @@ export default function TrackerPage() {
         </header>
 
         <main className="p-6 max-w-4xl mx-auto w-full space-y-8">
+          {usageRemaining !== null && usageRemaining <= 0 && (
+            <Alert variant="destructive" className="bg-destructive/10 border-destructive/20 text-destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Usage Limit Reached</AlertTitle>
+              <AlertDescription>
+                You've reached your daily limit of AI-powered analyses. Your counter will reset tomorrow.
+              </AlertDescription>
+            </Alert>
+          )}
+
           <section className="space-y-4">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 bg-primary/20 rounded-lg">
-                <Brain className="w-5 h-5 text-primary" />
+            <div className="flex items-center justify-between gap-3 mb-2">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-primary/20 rounded-lg">
+                  <Brain className="w-5 h-5 text-primary" />
+                </div>
+                <h2 className="font-headline text-2xl font-bold">What did you do today?</h2>
               </div>
-              <h2 className="font-headline text-2xl font-bold">What did you do today?</h2>
+              {usageRemaining !== null && (
+                <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest bg-secondary/50 px-3 py-1 rounded-full">
+                  {usageRemaining} requests left today
+                </span>
+              )}
             </div>
             <p className="text-muted-foreground">
-              Describe your meals, transportation, and home energy usage in your own words. Trace's AI will calculate the carbon equivalent in real-time.
+              Describe your meals, transportation, and home energy usage. Trace's AI will calculate the carbon equivalent.
             </p>
             
             <div className="relative group">
@@ -60,16 +112,17 @@ export default function TrackerPage() {
               <Card className="relative border-border/50 bg-card rounded-2xl overflow-hidden shadow-xl">
                 <CardContent className="p-0">
                   <Textarea 
-                    placeholder="Example: I had a steak for lunch, took the bus to work (8 miles), and watched Netflix for 3 hours with the AC on."
+                    placeholder="Example: I had a steak for lunch, took the bus to work (8 miles), and watched Netflix for 3 hours."
                     className="min-h-[160px] p-6 border-none focus-visible:ring-0 text-lg resize-none bg-transparent"
                     value={log}
                     onChange={(e) => setLog(e.target.value)}
+                    disabled={usageRemaining !== null && usageRemaining <= 0}
                   />
                   <div className="p-4 flex justify-between items-center bg-secondary/30 border-t border-border/50">
                     <p className="text-xs text-muted-foreground">AI estimates are based on global carbon standards.</p>
                     <Button 
                       onClick={handleAnalyze} 
-                      disabled={isAnalyzing || !log.trim()}
+                      disabled={isAnalyzing || !log.trim() || (usageRemaining !== null && usageRemaining <= 0)}
                       className="bg-primary text-background font-bold px-6 rounded-full hover:bg-primary/90 shadow-lg shadow-primary/20"
                     >
                       {isAnalyzing ? (

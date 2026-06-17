@@ -1,0 +1,38 @@
+
+{
+  "entities": {
+    "UserUsage": {
+      "title": "UserUsage",
+      "description": "Tracks the number of AI requests made by a user to prevent over-use.",
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "number",
+          "description": "Number of requests made today."
+        },
+        "lastReset": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The last time the counter was reset (start of the day)."
+        }
+      },
+      "required": [
+        "count",
+        "lastReset"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "google.com"
+    ]
+  },
+  "firestore": {
+    "/usage/{userId}": {
+      "schema": {
+        "$ref": "#/backend/entities/UserUsage"
+      },
+      "description": "Storage for per-user AI usage statistics."
+    }
+  }
+}
